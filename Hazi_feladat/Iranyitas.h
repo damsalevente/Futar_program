@@ -7,8 +7,9 @@ class Futar {
 	int posY;
 	bool isEmpty;
 	int azonosito;
+	Megrendeles *megrendeles;
 public:
-	Futar(int, int, bool, int);
+	Futar(int _posX=0, int _posY=0, bool _isEmpty=true, int _azonosito=0,Megrendeles *m=nullptr);
 	int getX()const;
 	int getY() const;
 	bool getIsEmpty() const;
@@ -50,22 +51,15 @@ private:
 };
 class Ceg {
 private:
-	Teherauto *teherautok;
-	Szemelygepjarmu *szemelygepjarmuvek;
-	Bicikli *biciklik;
-	int tDb;
-	int szDb;
-	int bDb;
+	
+	Futar *futar;
+	int num;
 public:
 	void init();
 	Futar *getClosest(const Megrendeles &m) const;
-	void add(Bicikli &a);
-	void add(Teherauto &a);
-	void add(Szemelygepjarmu &a);
-	void select(Bicikli &a, Megrendeles &m);
-	void select(Teherauto &a,Megrendeles &m);
-	void select(Szemelygepjarmu &a,Megrendeles &m);
-	int track(Megrendeles &m);	//megadja az azonosítót, ha nem viszi senki, akkor 0
+	void add(Futar &a);
+	void select(Futar &a, Megrendeles &m);
+	int track(Megrendeles &m) const;	//megadja az azonosítót, ha nem viszi senki, akkor 0
 	
 	
 };

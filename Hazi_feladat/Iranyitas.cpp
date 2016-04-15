@@ -10,36 +10,25 @@ Futar * Ceg::getClosest(const Megrendeles & m) const
 	return nullptr;
 }
 
-void Ceg::add(Teherauto & a)
-{
-}
-void Ceg::add(Bicikli &a)
-{
-
-}
-void Ceg::add(Szemelygepjarmu &a)
-{
-
-}
-
-void Ceg::select(Bicikli & a, Megrendeles & m)
+void Ceg::add(Futar & a)
 {
 }
 
-void Ceg::select(Teherauto & a, Megrendeles & m)
+void Ceg::select(Futar & a, Megrendeles & m)
 {
 }
 
-void Ceg::select(Szemelygepjarmu & a, Megrendeles & m)
-{
-}
-
-int Ceg::track(Megrendeles & m)
+int Ceg::track(Megrendeles & m) const
 {
 	return 0;
 }
 
+
 Futar::Futar(int, int, bool, int)
+{
+}
+
+Futar::Futar(int _posX, int _posY, bool _isEmpty, int _azonosito, Megrendeles * m)
 {
 }
 
