@@ -1,13 +1,19 @@
 #include "Iranyitas.h"
+#include <iostream>
+using namespace std;
 
-void Ceg::init()
+
+void Ceg::printFutarList() const
 {
-	
+	for (int i = 0; i < num; i++)
+	{
+			 //át kell írni a futar kiírását
+	}
 }
 
 Futar * Ceg::getClosest(const Megrendeles & m) const
 {
-	return nullptr;
+	return NULL;
 }
 
 void Ceg::add(Futar & a)
@@ -24,32 +30,41 @@ int Ceg::track(Megrendeles & m) const
 }
 
 
-Futar::Futar(int, int, bool, int)
-{
-}
 
-Futar::Futar(int _posX, int _posY, bool _isEmpty, int _azonosito, Megrendeles * m)
+
+Futar::Futar(int _posX, int _posY, bool _isEmpty, int _azonosito)
 {
+	
+		posX = _posX+1;
+		posY = _posY;
+		isEmpty = _isEmpty;
+		azonosito = _azonosito;		
 }
 
 int Futar::getX() const
 {
-	return 0;
+	return posX;
 }
 
 int Futar::getY() const
 {
-	return 0;
+	return posY;
 }
-
+void Futar::print()
+{
+	
+	cout << "Futar azonosito:" << getAzonosito() << "Eppen nincs csomagja:" << getIsEmpty() << " X pozicio:" << getX() << " Y pozicio:" << getY();
+	
+	
+}
 bool Futar::getIsEmpty() const
 {
-	return false;
+	return isEmpty;
 }
 
 int Futar::getAzonosito() const
 {
-	return 0;
+	return azonosito;
 }
 
 void Futar::setX(int)
@@ -68,12 +83,51 @@ void Futar::setAzonosito(int)
 {
 }
 
-bool Bicikli::inRadius(const Megrendeles & m)
+double  Futar::getDistance(const Megrendeles & m) const
 {
-	return false;
+	return sqrt((m.getPosX() - getX())*(m.getPosX() - getX()) + (m.getPosY() - getY())*(m.getPosY() - getY()));
 }
 
-Teherauto::Teherauto(int _posX, int _posY, bool _isEmpty, int _azonosito, int _capacity)
+//bool Bicikli::inRadius(const Megrendeles & m)
+//{
+//	return false;
+//}
+//
+
+
+Megrendeles::Megrendeles(int s, int px, int py, int dx, int dy)
 {
+}
+
+int Megrendeles::getSize() const
+{
+	return size;
+}
+
+int Megrendeles::getPosX() const
+{
+	return posX;
+}
+
+int Megrendeles::getPosY() const
+{
+	return posY;
+}
+
+int Megrendeles::getDestX() const
+{
+	return destX;
+}
+
+int Megrendeles::getDestY() const
+{
+	return destY;
+}
+
+void Megrendeles::setPos()
+{
+	posX = destX;
+	posY = destY;
+	size = 0;
 
 }
