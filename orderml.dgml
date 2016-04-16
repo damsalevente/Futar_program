@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DirectedGraph GraphDirection="LeftToRight" xmlns="http://schemas.microsoft.com/vs/2009/dgml">
+  <Nodes>
+    <Node Id="Database" Label="Data Source=damsalevente.database.windows.net;Initial Catalog=Orders;Persist Security Info=True;User ID=damsalevente;Password=Bbrel111" Category="Database" Group="Expanded" />
+    <Node Id="dbo" Label="dbo" Category="Schema" Group="Expanded" />
+    <Node Id="dbo.Table" Label="dbo.Table" Category="Table" Group="Collapsed" />
+    <Node Id="dbo.Table_PosX" Label="PosX" Category="Field" Description="int" />
+    <Node Id="dbo.Table_PosY" Label="PosY" Category="Field" Description="int" />
+    <Node Id="dbo.Table_DestX" Label="DestX" Category="Field" Description="int" />
+    <Node Id="dbo.Table_DestY" Label="DestY" Category="Field" Description="int" />
+    <Node Id="dbo.Table_Size" Label="Size" Category="Field" Description="int" />
+  </Nodes>
+  <Links>
+    <Link Source="Database" Target="dbo" Category="Contains" />
+    <Link Source="dbo" Target="dbo.Table" Category="Contains" />
+    <Link Source="dbo.Table" Target="dbo.Table_PosX" Category="Contains" />
+    <Link Source="dbo.Table" Target="dbo.Table_PosY" Category="Contains" />
+    <Link Source="dbo.Table" Target="dbo.Table_DestX" Category="Contains" />
+    <Link Source="dbo.Table" Target="dbo.Table_DestY" Category="Contains" />
+    <Link Source="dbo.Table" Target="dbo.Table_Size" Category="Contains" />
+  </Links>
+  <Styles>
+    <Style TargetType="Node" GroupLabel="Table" ValueLabel="True">
+      <Condition Expression="HasCategory('Table')" />
+      <Setter Property="Background" Value="#FFC0C0C0" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Schema" ValueLabel="True">
+      <Condition Expression="HasCategory('Schema')" />
+      <Setter Property="Background" Value="#FF7F9169" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Field Primary" ValueLabel="True">
+      <Condition Expression="HasCategory('Field Primary')" />
+      <Setter Property="Background" Value="#FF008000" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Field Optional" ValueLabel="True">
+      <Condition Expression="HasCategory('Field Optional')" />
+      <Setter Property="Background" Value="#FF808040" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Field Foreign" ValueLabel="True">
+      <Condition Expression="HasCategory('Field Foreign')" />
+      <Setter Property="Background" Value="#FF8080FF" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Field" ValueLabel="True">
+      <Condition Expression="HasCategory('Field')" />
+      <Setter Property="Background" Value="#FFC0A000" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Database" ValueLabel="True">
+      <Condition Expression="HasCategory('Database')" />
+      <Setter Property="Background" Value="#FFFFFFFF" />
+    </Style>
+  </Styles>
+</DirectedGraph>

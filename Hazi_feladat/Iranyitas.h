@@ -55,7 +55,6 @@ public:
 	bool getIsEmpty() const;
 	//kiadja, hogy üres-e 
 	int getAzonosito() const;
-	//virtual char callType() const=0;
 	//Minden jármû elmondja, hogy milyen tipusú, b->bicikli, a->szemelygepjarmû, t->teherauto
 	void setX(int);
 	//Beállítja x értékét, a Cég fogja használni, hogy tudja mozgatni 
@@ -75,28 +74,28 @@ public:
 	friend ostream & operator<<(ostream & o, const Futar &a);
 
 };
-//class Teherauto :public Futar {
-//private:
-//	int capacity;
-//public:
-//	Teherauto(int _posX = 0, int _posY = 0, bool _isEmpty = false, int _azonosito = 0, int _capacity = 0) { capacity = _capacity; };
-//
-//
-//};
-//class Szemelygepjarmu :public Futar {
-//public:
-//
-//
-//
-//};
-//class Bicikli : public Futar {
-//public:
-//	bool inRadius(const Megrendeles &m);
-//
-//
-//};
-//
-//
+class Teherauto :public Futar {
+public:
+	Teherauto() {};
+	Teherauto(int px, int py, bool isEmptyy, int az);
+	char callType() const;
+};
+class Szemelygepjarmu :public Futar {
+public:
+	Szemelygepjarmu() {};
+	Szemelygepjarmu(int px, int py, bool isEmptyy, int az) :Futar(px, py, isEmptyy, az) {};
+	char callType() const;
+
+};
+class Bicikli : public Futar {
+public:
+	Bicikli() {};
+	Bicikli(int px, int py, bool isEmptyy, int az) :Futar(px, py, isEmptyy, az) {};
+	char callType() const;
+
+};
+
+
 class Ceg {
 private:
 

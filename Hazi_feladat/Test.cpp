@@ -1,9 +1,9 @@
 #include "Iranyitas.h"
-#include <iostream>
+
 using namespace std;
 int main()
 {
-
+	
 	//Ceg a;
 	//Bicikli b;
 	//Szemelygepjarmu sz;
@@ -19,9 +19,13 @@ int main()
 	//a.select(t, m);
 	//a.track(m);	  //keresse meg, hogy melyik futárnál van, visszaadja az azonosítóját
 	Ceg a;
-	Futar elso(1, 2, true, 5);
+	Bicikli elso(1, 2, true, 5);
 	cout << elso;
-
+	Futar b;
+	Bicikli c(1,2,false,3);
+	b = c;
+	Teherauto d;
+	
 	
 	return 0;
 }

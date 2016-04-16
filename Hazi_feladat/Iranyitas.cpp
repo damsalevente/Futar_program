@@ -124,6 +124,7 @@ int Futar::getAzonosito() const
 	return azonosito;
 }
 
+
 void Futar::setX(int)
 {
 }
@@ -203,4 +204,23 @@ void Megrendeles::setPos()
 	posY = destY;
 	size = 0;
 
+}
+
+Teherauto::Teherauto(int px ,int py, bool isEmptyy,int az):Futar(px,py,isEmptyy,az)
+{
+}
+
+char Teherauto::callType() const
+{
+	return 't';
+}
+
+char Szemelygepjarmu::callType() const
+{
+	return 's';
+}
+
+char Bicikli::callType() const
+{
+	return 'b';
 }
