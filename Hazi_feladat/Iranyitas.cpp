@@ -35,7 +35,7 @@ int Ceg::track(Megrendeles & m) const
 Futar::Futar(int _posX, int _posY, bool _isEmpty, int _azonosito)
 {
 	
-		posX = _posX+1;
+		posX = _posX;
 		posY = _posY;
 		isEmpty = _isEmpty;
 		azonosito = _azonosito;		
@@ -49,6 +49,19 @@ int Futar::getX() const
 int Futar::getY() const
 {
 	return posY;
+}
+ostream & operator<<(ostream & o, const Futar &a)
+{
+	o << "............................................." << endl;
+	o << "Azonosito: " << a.getAzonosito() << endl;
+	o << "Pozicio: (" << a.getX() << "," << a.getY() << ")"<<endl;
+	if (a.getIsEmpty())
+		o << "Ures" << endl;
+	else {
+		o << "Tele"<<endl;
+	}
+	o << "............................................." << endl;
+	return o;
 }
 void Futar::print()
 {

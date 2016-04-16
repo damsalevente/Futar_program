@@ -3,6 +3,7 @@
 #ifndef IRANYITAS_H
 #define IRANYITAS_H
 
+using namespace std;
 //TODO: write your code here
 class Megrendeles {	 //getterek, és konstruktor kell 
 private:
@@ -58,6 +59,8 @@ public:
 	double getDistance(const Megrendeles &m) const;
 	//Megadja, hogy milyen távol van egy adott csomagtól, ezt sem kell külön kiszámolni különbözõ típusnak
 	void print();
+	//kiprintel mindent, ostream operator overload elõtti állapot
+	friend ostream & operator<<(ostream & o, const Futar &a);
 
 };
 //class Teherauto :public Futar {

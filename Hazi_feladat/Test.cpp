@@ -19,9 +19,8 @@ int main()
 	//a.select(t, m);
 	//a.track(m);	  //keresse meg, hogy melyik futárnál van, visszaadja az azonosítóját
 	Ceg a;
-	Futar *elso=new Futar(1, 2, false, 5);
-	elso->print();
-	
+	Futar elso(1, 2, true, 5);
+	cout << elso;
 
 	
 	return 0;
