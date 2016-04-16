@@ -39,6 +39,7 @@ class Futar {
 	int posY;
 	bool isEmpty;
 	int azonosito;
+	char futarType;
 	Megrendeles *megrendeles;
 	//vagy mutasson rá, vagy legyen benne egy egész , a cím szerinti tárolás helytakarékosabb, cégnél meg úgyis vannak megrendelések
 public:
@@ -63,7 +64,9 @@ public:
 	void setIsEmpty(bool);
 	//Beallítja üresnek,telinek a jármûvet
 	void setAzonosito(int);
+	void setFutarType(char a);
 	//azonosítót csak egyszer kap, ezt nem fogjuk használni
+	char getFutarType()const;
 	void setMegrendeles(Megrendeles *m);
 	//egy megrendeles címet kap és arra állítja a megrendeles nevû pointert
 	Megrendeles * getMegrendeles();
@@ -78,20 +81,20 @@ class Teherauto :public Futar {
 public:
 	Teherauto() {};
 	Teherauto(int px, int py, bool isEmptyy, int az);
-	char callType() const;
+	void  setType();
 };
 class Szemelygepjarmu :public Futar {
 public:
 	Szemelygepjarmu() {};
 	Szemelygepjarmu(int px, int py, bool isEmptyy, int az) :Futar(px, py, isEmptyy, az) {};
-	char callType() const;
+	void  setType();
 
 };
 class Bicikli : public Futar {
 public:
 	Bicikli() {};
 	Bicikli(int px, int py, bool isEmptyy, int az) :Futar(px, py, isEmptyy, az) {};
-	char callType() const;
+	void  setType();
 
 };
 

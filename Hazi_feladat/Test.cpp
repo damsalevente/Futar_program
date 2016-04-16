@@ -24,7 +24,9 @@ int main()
 	Futar b;
 	Bicikli c(1,2,false,3);
 	b = c;
-	Teherauto d;
+	//újra kell definiálni a másoló konstruktort, amikor altípusból csinálom
+	c.setType();
+	cout << b.getFutarType();
 	
 	
 	return 0;

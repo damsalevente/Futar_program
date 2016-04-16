@@ -141,6 +141,16 @@ void Futar::setAzonosito(int)
 {
 }
 
+void Futar::setFutarType(char a)
+{
+	futarType = a;
+}
+
+char Futar::getFutarType() const
+{
+	return futarType;
+}
+
 void Futar::setMegrendeles(Megrendeles * m)
 {
 	megrendeles = m;
@@ -210,17 +220,18 @@ Teherauto::Teherauto(int px ,int py, bool isEmptyy,int az):Futar(px,py,isEmptyy,
 {
 }
 
-char Teherauto::callType() const
+void Teherauto::setType()
 {
-	return 't';
+	setFutarType('f');
 }
 
-char Szemelygepjarmu::callType() const
+
+void Szemelygepjarmu::setType()
 {
-	return 's';
+	setFutarType('s');
 }
 
-char Bicikli::callType() const
+void Bicikli::setType()
 {
-	return 'b';
+	setFutarType('b');
 }
