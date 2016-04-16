@@ -3,6 +3,51 @@
 using namespace std;
 
 
+Ceg::Ceg()
+{
+	futar = NULL;
+	megrendeles = NULL;
+	mNum = 0;
+	num = 0;
+
+}
+
+void Ceg::hire(const Futar & a)
+{
+	Futar newfutar = a;
+	num++;
+	Futar *tmp = new Futar[num];
+	for (int i = 0; i < num - 1; i++)
+	{
+		tmp[i] = futar[i];
+	}
+	tmp[num - 1] = newfutar;
+	delete[] futar;
+	futar = tmp;
+
+}
+
+void Ceg::addOrder(const Megrendeles & m)
+{
+	mNum++;
+	Megrendeles newMegrendeles = m;
+	Megrendeles *tmp = new Megrendeles[mNum];
+	for (int i = 0; i < mNum - 1; i++)
+	{
+		tmp[i] = megrendeles[i];
+	}
+	tmp[mNum - 1] = newMegrendeles;
+	delete[] megrendeles;
+	tmp = megrendeles;
+
+}
+
+Ceg::~Ceg()
+{
+	delete[] futar;
+	delete[] megrendeles;
+}
+
 void Ceg::printFutarList() const
 {
 	for (int i = 0; i < num; i++)
@@ -16,9 +61,7 @@ Futar * Ceg::getClosest(const Megrendeles & m) const
 	return NULL;
 }
 
-void Ceg::add(Futar & a)
-{
-}
+
 
 void Ceg::select(Futar & a, Megrendeles & m)
 {
@@ -39,6 +82,7 @@ Futar::Futar(int _posX, int _posY, bool _isEmpty, int _azonosito)
 		posY = _posY;
 		isEmpty = _isEmpty;
 		azonosito = _azonosito;		
+		megrendeles = NULL;
 }
 
 int Futar::getX() const
@@ -96,6 +140,16 @@ void Futar::setAzonosito(int)
 {
 }
 
+void Futar::setMegrendeles(Megrendeles * m)
+{
+	megrendeles = m;
+}
+
+Megrendeles * Futar::getMegrendeles()
+{
+	return megrendeles;
+}
+
 double  Futar::getDistance(const Megrendeles & m) const
 {
 	return sqrt((m.getPosX() - getX())*(m.getPosX() - getX()) + (m.getPosY() - getY())*(m.getPosY() - getY()));
@@ -110,6 +164,12 @@ double  Futar::getDistance(const Megrendeles & m) const
 
 Megrendeles::Megrendeles(int s, int px, int py, int dx, int dy)
 {
+	size = s;
+	posX = px;
+	posY = py;
+	destX = dx;
+	destY = dy;
+
 }
 
 int Megrendeles::getSize() const

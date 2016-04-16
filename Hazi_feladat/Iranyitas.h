@@ -14,6 +14,9 @@ private:
 	int destY;
 public:
 	Megrendeles(int, int px, int py, int dx, int dy);
+	//Csak ezzel a konstuktorral fogjuk meghívnia a megrendelést, nem kell settelni semmit, csak ha célba ért 
+	Megrendeles() {};
+	//tombosítéshez kell feault konstuktor
 	//Azt kell ellenõrizni, hogy mindegyik pozitív,ha nem akkor ne csináljon semmit, majd try catch blockba szervezés szükséges
 	int getSize()const;
 	//méretet visszaadja
@@ -32,13 +35,19 @@ public:
 
 };
 class Futar {
-	int posX;						//nem feltétlenül szükséges, hogy legyen a futaroknak is poziciójuk, lehet úgy egyszerûbb, ha csak egy megrendelést kapnak 
+	int posX;					 
 	int posY;
 	bool isEmpty;
 	int azonosito;
+	Megrendeles *megrendeles;
+	//vagy mutasson rá, vagy legyen benne egy egész , a cím szerinti tárolás helytakarékosabb, cégnél meg úgyis vannak megrendelések
 public:
+	Futar() {};
+	//A futar default konstruktora, nem csinál semmit 
+
 	Futar(int, int , bool, int );
 	//Megrendeleséket pointerként kapja, az egyes elemek mindegyikének van egy default értéke, így rossz inicializálás esetén ezeket az értékeket kapja
+	//a megrendelés alapesetben NULL, csak a set tudja beállítani, amit csak a cég fog kezelni 
 	int getX()const;
 	//X pozicióját kiadja
 	int getY() const;
@@ -56,6 +65,9 @@ public:
 	//Beallítja üresnek,telinek a jármûvet
 	void setAzonosito(int);
 	//azonosítót csak egyszer kap, ezt nem fogjuk használni
+	void setMegrendeles(Megrendeles *m);
+	//egy megrendeles címet kap és arra állítja a megrendeles nevû pointert
+	Megrendeles * getMegrendeles();
 	double getDistance(const Megrendeles &m) const;
 	//Megadja, hogy milyen távol van egy adott csomagtól, ezt sem kell külön kiszámolni különbözõ típusnak
 	void print();
@@ -89,17 +101,25 @@ class Ceg {
 private:
 
 	Futar *futar;
+	Megrendeles *megrendeles;
+	int mNum;
 	int num;
 public:
-	Ceg() {
-		futar = NULL;
-		num = 0;
-	}
+	Ceg();
+	void hire(const Futar &a);
+	//ellenõrizni kell hozzá, hogy mûködik-e a másoló konstruktor defaultként, vagy újra kell írni.
+	//beállítja az utolsó helyre az új futárt, default konstruktorként hívja, a felhasználótól elvárja hogy inicializálja 
+	void addOrder(const Megrendeles &m);
+	//felvesz egy új megrendelést
+	//a megadott megrendelésnek már LÉTEZNIE KELL 
+	~Ceg();
+	//Destruktor, letöröljük a futart
 	void printFutarList() const;
+	//kiírja a standart kimenetre a futárokat
 	Futar *getClosest(const Megrendeles &m) const;
-	void add(Futar &a);
 	void select(Futar &a, Megrendeles &m);
-	int track(Megrendeles &m) const;	//megadja az azonosítót, ha nem viszi senki, akkor 0
+	int track(Megrendeles &m) const;	
+	//megadja az azonosítót, ha nem viszi senki, akkor 0
 
 
 };
