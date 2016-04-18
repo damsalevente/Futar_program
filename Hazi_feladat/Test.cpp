@@ -23,10 +23,8 @@ int main()
 	cout << elso;
 	Futar b;
 	Bicikli c(1,2,false,3);
-	b = c;
-	//újra kell definiálni a másoló konstruktort, amikor altípusból csinálom
-	c.setType();
-	cout << b.getFutarType();
+	
+	
 	
 	
 	return 0;

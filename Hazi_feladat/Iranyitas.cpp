@@ -52,23 +52,26 @@ void Ceg::printFutarList() const
 {
 	for (int i = 0; i < num; i++)
 	{
-			 //át kell írni a futar kiírását
+		cout << futar[i];
 	}
 }
 
-Futar * Ceg::getClosest(const Megrendeles & m) const
+
+
+
+
+void Ceg::select(Futar & a, Megrendeles * m)
 {
-	return NULL;
-}
-
-
-
-void Ceg::select(Futar & a, Megrendeles & m)
-{
+	a.setMegrendeles(m);
 }
 
 int Ceg::track(Megrendeles & m) const
 {
+	for (int i = 0; i < num; i++)
+	{
+		if (futar[i].getMegrendeles() == &m && futar[i].getMegrendeles()!=0)
+			return futar[i].getAzonosito();
+	}
 	return 0;
 }
 
@@ -137,21 +140,15 @@ void Futar::setIsEmpty(bool)
 {
 }
 
+
+
 void Futar::setAzonosito(int)
 {
 }
 
-void Futar::setFutarType(char a)
-{
-	futarType = a;
-}
 
-char Futar::getFutarType() const
-{
-	return futarType;
-}
 
-void Futar::setMegrendeles(Megrendeles * m)
+void Futar::setMegrendeles( Megrendeles * m)
 {
 	megrendeles = m;
 }
@@ -164,6 +161,11 @@ Megrendeles * Futar::getMegrendeles()
 double  Futar::getDistance(const Megrendeles & m) const
 {
 	return sqrt((m.getPosX() - getX())*(m.getPosX() - getX()) + (m.getPosY() - getY())*(m.getPosY() - getY()));
+}
+
+double Futar::getDestDistance(const Megrendeles & m) const
+{
+	return sqrt((m.getDestX()-posX)*(m.getDestX() - posX)+ (m.getDestY() - posY)*(m.getDestY() - posY));
 }
 
 //bool Bicikli::inRadius(const Megrendeles & m)
@@ -218,20 +220,35 @@ void Megrendeles::setPos()
 
 Teherauto::Teherauto(int px ,int py, bool isEmptyy,int az):Futar(px,py,isEmptyy,az)
 {
+	//Futarhoz akkor viszont kell hibakezelés!
 }
 
-void Teherauto::setType()
+bool Teherauto::available(Megrendeles & m) const
 {
-	setFutarType('f');
+	return getIsEmpty();
 }
 
-
-void Szemelygepjarmu::setType()
+char Teherauto::callType() const
 {
-	setFutarType('s');
+	return 't';
 }
 
-void Bicikli::setType()
+bool Szemelygepjarmu::available(Megrendeles & m) const
 {
-	setFutarType('b');
+	return (m.getSize == 1 && getIsEmpty());
+}
+
+char Szemelygepjarmu::callType() const
+{
+	return 's';
+}
+
+bool Bicikli::available(Megrendeles & m) const
+{
+	return (m.getSize() == 1 && getDistance(m) <= 15 && getIsEmpty() == true && getDestDistance(m)<=15);	  
+}
+
+char Bicikli::callType() const
+{
+	return 'b';
 }

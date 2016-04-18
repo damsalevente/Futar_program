@@ -29,7 +29,7 @@ public:
 	int getDestY()const;
 	//hova akar menni y irányba
 	void setPos();
-
+	//beállítja a posx posy-t destx és desty-ra , desteket meg 0,0 -ra 
 	//átállítjuk x-et és y-t dest X-re és destY-ra, és külön kell majd vizsgálni, hogyha ezek megegyeznek ,akkor ne keressünk nekik jármûvet, hogy elvigye
 	//update: beállítottam 0-ra a size-t így ezzel rá tudunk szûrni a valódi csomagokra
 
@@ -39,13 +39,12 @@ class Futar {
 	int posY;
 	bool isEmpty;
 	int azonosito;
-	char futarType;
 	Megrendeles *megrendeles;
 	//vagy mutasson rá, vagy legyen benne egy egész , a cím szerinti tárolás helytakarékosabb, cégnél meg úgyis vannak megrendelések
 public:
 	Futar() {};
 	//A futar default konstruktora, nem csinál semmit 
-
+	//Virtuális destruktor ? 
 	Futar(int, int , bool, int );
 	//Megrendeleséket pointerként kapja, az egyes elemek mindegyikének van egy default értéke, így rossz inicializálás esetén ezeket az értékeket kapja
 	//a megrendelés alapesetben NULL, csak a set tudja beállítani, amit csak a cég fog kezelni 
@@ -63,17 +62,24 @@ public:
 	//Beállítja y értéket, a Cég fogja használni, hogy tudja mozgatni
 	void setIsEmpty(bool);
 	//Beallítja üresnek,telinek a jármûvet
+	
+	//origótól vett távolság
 	void setAzonosito(int);
-	void setFutarType(char a);
-	//azonosítót csak egyszer kap, ezt nem fogjuk használni
-	char getFutarType()const;
 	void setMegrendeles(Megrendeles *m);
 	//egy megrendeles címet kap és arra állítja a megrendeles nevû pointert
 	Megrendeles * getMegrendeles();
 	double getDistance(const Megrendeles &m) const;
 	//Megadja, hogy milyen távol van egy adott csomagtól, ezt sem kell külön kiszámolni különbözõ típusnak
+	double getDestDistance(const Megrendeles &m) const;
+	//megadja, hogy milyen távol van a csomag távolsága
 	void print();
 	//kiprintel mindent, ostream operator overload elõtti állapot
+	virtual bool available(const Megrendeles &m) { return false; };
+	//megnézi minden esetben, hogy elérhetõ-e a futár, legyen szó biciklistáról, futárral satöbbi 
+	// Ha ez hívódik meg, akkor biztos, hogy nem elérhetõ
+	virtual char  callType()const {};
+	//elmondja micsoda
+
 	friend ostream & operator<<(ostream & o, const Futar &a);
 
 };
@@ -81,20 +87,29 @@ class Teherauto :public Futar {
 public:
 	Teherauto() {};
 	Teherauto(int px, int py, bool isEmptyy, int az);
-	void  setType();
+	bool available(Megrendeles &m) const;
+	char callType()const;
+	//Megmondja, hogy nincs tele, és éppen nincs megrendelése 
+	
 };
 class Szemelygepjarmu :public Futar {
 public:
 	Szemelygepjarmu() {};
 	Szemelygepjarmu(int px, int py, bool isEmptyy, int az) :Futar(px, py, isEmptyy, az) {};
-	void  setType();
+	bool available(Megrendeles &m)const;
+	
+	// ha üres és a mérete a csomagnak 1, akkor elérhetõ 
+	char callType()const;
 
 };
 class Bicikli : public Futar {
 public:
 	Bicikli() {};
 	Bicikli(int px, int py, bool isEmptyy, int az) :Futar(px, py, isEmptyy, az) {};
-	void  setType();
+	bool available(Megrendeles &m) const; 
+	char callType()const;
+
+
 
 };
 
@@ -118,11 +133,26 @@ public:
 	//Destruktor, letöröljük a futart
 	void printFutarList() const;
 	//kiírja a standart kimenetre a futárokat
-	Futar *getClosest(const Megrendeles &m) const;
-	void select(Futar &a, Megrendeles &m);
+	
+	void select(Futar &a,  Megrendeles *m);
+	//futárt bántani fogjuk, ezért nem constans megrendelést nem
 	int track(Megrendeles &m) const;	
 	//megadja az azonosítót, ha nem viszi senki, akkor 0
-
+	void  giveOrder(Megrendeles *m)
+	{
+		/*int minDist = futar[0].getDistance(*m);
+		for (int i = 0; i < num; i++)
+		{
+			if (futar[i].available)
+			{
+				if (futar[i].callType() == 'b')
+				{
+					if
+					select(futar[i], m);
+				}
+			}
+		}*/
+	}
 
 };
 
