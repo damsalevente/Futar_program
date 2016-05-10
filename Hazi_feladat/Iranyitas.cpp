@@ -1,6 +1,7 @@
 #include "Iranyitas.h"
 #include <iostream>
 #include <vector>
+#include <fstream>
 using namespace std;
 
 
@@ -63,6 +64,17 @@ void Ceg::printFutarList() const
 
 
 
+void Ceg::log() const
+{
+	ofstream logFile;
+	logFile.open("CegData.txt",ios::out);
+	for (int i = 0; i < num; i++)
+	{
+		logFile << *futar[i];
+	}
+	logFile.close();
+}
+
 void Ceg::select(Futar & a, Megrendeles * m)
 {
 	a.setMegrendeles(m);
@@ -86,13 +98,16 @@ void Ceg::giveOrder(Megrendeles * m)
 	{
 		if (futar[i]->available(*m))
 		{
-			if (futar[i]->preference(*m) > pref) {
+
+			if (futar[i]->preference(*m) >= pref) {
 				pref = futar[i]->preference(*m);
 				index = i;
 			}
 		}
 	}
-	futar[index]->setMegrendeles(m);
+	if (futar[index]->available(*m) == false) {}
+	else 
+		futar[index]->setMegrendeles(m);
 }
 
 
@@ -197,6 +212,7 @@ int Futar::preference(const Megrendeles & m) const
 {
 	//Rossz konstruktor hívódott meg
 	throw 	string("You shouldnt use Futar's preference");
+	cout << "Rossz helyen lett meghívva a preference";
 	return -1;
 }
 
@@ -304,3 +320,16 @@ int Bicikli::preference(const Megrendeles & m) const
 	return pref;
 }
 
+ofstream & operator<<(ofstream & o, const Futar &a)
+{
+	o << "............................................." << endl;
+	o << "Azonosito: " << a.getAzonosito() << endl;
+	o << "Pozicio: (" << a.getX() << "," << a.getY() << ")" << endl;
+	if (a.getIsEmpty())
+		o << "Ures" << endl;
+	else {
+		o << "Tele" << endl;
+	}
+	o << "............................................." << endl;
+	return o;
+}

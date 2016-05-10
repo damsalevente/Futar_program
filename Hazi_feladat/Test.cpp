@@ -19,14 +19,21 @@ int main()
 	//a.select(sz, m);
 	//a.select(t, m);
 	//a.track(m);	  //keresse meg, hogy melyik futárnál van, visszaadja az azonosítóját
+
+	//important!!!:Le kell tesztelni, hogy a numot nem rontottam-e el valahol  
+
 	Bicikli bicikli(1, 1, true, 1);
 	Teherauto teherauto(1, 1, true, 2);
 	Megrendeles megrendeles(1, 1, 2, 2, 1);
+	Megrendeles rendeles(1, 3, 3, 3, 60);
 	Ceg a;
 	a.hire(&bicikli);
+	a.hire(&teherauto);
+	a.log();
 	a.printFutarList();
 	cout<<a.getFutar(0);
 	a.giveOrder(&megrendeles);
+	a.giveOrder(&rendeles);
 	a.printFutarList();
 	//csillaggal lehet meghívni a printelést (ez sem valami univerzális ) 
 	

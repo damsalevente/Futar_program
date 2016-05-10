@@ -133,11 +133,12 @@ public:
 	//felvesz egy új megrendelést
 	//a megadott megrendelésnek már LÉTEZNIE KELL 
 	Futar getFutar(int index);
+	//A megadott indexû Futár pointer értékét adja vissza
 	~Ceg();
-	//Destruktor, letöröljük a futart
+	//Destruktor, letöröljük a pointert
 	void printFutarList() const;
 	//kiírja a standart kimenetre a futárokat
-	
+	void log()const;
 	void select(Futar &a, Megrendeles *m);
 	//futárt bántani fogjuk, ezért nem constans megrendelést nem
 	int track(Megrendeles &m) const;
