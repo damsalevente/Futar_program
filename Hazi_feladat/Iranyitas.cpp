@@ -1,50 +1,53 @@
 #include "Iranyitas.h"
 #include <iostream>
+#include <vector>
 using namespace std;
 
 
 Ceg::Ceg()
 {
-	futar = NULL;
 	megrendeles = NULL;
 	mNum = 0;
 	num = 0;
 
 }
 
-void Ceg::hire(const Futar & a)
+void Ceg::hire(Futar *a)
 {
-	Futar newfutar = a;
+	 
+	
+	futar.push_back(a);
 	num++;
-	Futar *tmp = new Futar[num];
-	for (int i = 0; i < num - 1; i++)
-	{
-		tmp[i] = futar[i];
-	}
-	tmp[num - 1] = newfutar;
-	delete[] futar;
-	futar = tmp;
 
 }
 
 void Ceg::addOrder(const Megrendeles & m)
 {
 	mNum++;
-	Megrendeles newMegrendeles = m;
 	Megrendeles *tmp = new Megrendeles[mNum];
 	for (int i = 0; i < mNum - 1; i++)
 	{
 		tmp[i] = megrendeles[i];
 	}
-	tmp[mNum - 1] = newMegrendeles;
+	tmp[mNum - 1] = m;
 	delete[] megrendeles;
-	tmp = megrendeles;
+	megrendeles = tmp;
 
+}
+
+Futar  Ceg::getFutar(int index) 
+{
+	if (index >= num) {
+		throw string("out of the bound,first futar is returned! ");
+		return *futar.at(0);
+	}
+	return *futar[index];
 }
 
 Ceg::~Ceg()
 {
-	delete[] futar;
+	futar.clear();
+	//a clear saját magát eltakarítja, én meg a hívások során egyszer sem írtam new-ot ...könnyû elbénáznia a felhasználónak, de így mûködik
 	delete[] megrendeles;
 }
 
@@ -52,7 +55,7 @@ void Ceg::printFutarList() const
 {
 	for (int i = 0; i < num; i++)
 	{
-		cout << futar[i];
+		cout << *futar[i];
 	}
 }
 
@@ -69,10 +72,27 @@ int Ceg::track(Megrendeles & m) const
 {
 	for (int i = 0; i < num; i++)
 	{
-		if (futar[i].getMegrendeles() == &m && futar[i].getMegrendeles()!=0)
-			return futar[i].getAzonosito();
+		if (futar[i]->getMegrendeles() == &m && futar[i]->getMegrendeles() != 0)
+			return futar[i]->getAzonosito();
 	}
 	return 0;
+}
+
+void Ceg::giveOrder(Megrendeles * m)
+{
+	int pref = 0;	//minimum kereséshez a változó. ebben tárolom a legnagyobb preferencia értékét
+	int index = 0;	 //annak a futárnak az indexe,amelyik a legjobb megoldás
+	for (int i = 0; i < num; i++)
+	{
+		if (futar[i]->available(*m))
+		{
+			if (futar[i]->preference(*m) > pref) {
+				pref = futar[i]->preference(*m);
+				index = i;
+			}
+		}
+	}
+	futar[index]->setMegrendeles(m);
 }
 
 
@@ -80,12 +100,12 @@ int Ceg::track(Megrendeles & m) const
 
 Futar::Futar(int _posX, int _posY, bool _isEmpty, int _azonosito)
 {
-	
-		posX = _posX;
-		posY = _posY;
-		isEmpty = _isEmpty;
-		azonosito = _azonosito;		
-		megrendeles = NULL;
+
+	posX = _posX;
+	posY = _posY;
+	isEmpty = _isEmpty;
+	azonosito = _azonosito;
+	megrendeles = NULL;
 }
 
 int Futar::getX() const
@@ -101,22 +121,16 @@ ostream & operator<<(ostream & o, const Futar &a)
 {
 	o << "............................................." << endl;
 	o << "Azonosito: " << a.getAzonosito() << endl;
-	o << "Pozicio: (" << a.getX() << "," << a.getY() << ")"<<endl;
+	o << "Pozicio: (" << a.getX() << "," << a.getY() << ")" << endl;
 	if (a.getIsEmpty())
 		o << "Ures" << endl;
 	else {
-		o << "Tele"<<endl;
+		o << "Tele" << endl;
 	}
 	o << "............................................." << endl;
 	return o;
 }
-void Futar::print()
-{
-	
-	cout << "Futar azonosito:" << getAzonosito() << "Eppen nincs csomagja:" << getIsEmpty() << " X pozicio:" << getX() << " Y pozicio:" << getY();
-	
-	
-}
+
 bool Futar::getIsEmpty() const
 {
 	return isEmpty;
@@ -128,29 +142,34 @@ int Futar::getAzonosito() const
 }
 
 
-void Futar::setX(int)
+void Futar::setX(int x)
 {
+	posX = x;
 }
 
-void Futar::setY(int)
+void Futar::setY(int y)
 {
+	posY = y;
 }
 
-void Futar::setIsEmpty(bool)
+void Futar::setIsEmpty(bool a)
 {
-}
-
-
-
-void Futar::setAzonosito(int)
-{
+	isEmpty = a;
 }
 
 
 
-void Futar::setMegrendeles( Megrendeles * m)
+void Futar::setAzonosito(int az)
+{
+	azonosito = az;
+}
+
+
+
+void Futar::setMegrendeles(Megrendeles * m)
 {
 	megrendeles = m;
+	isEmpty = false;
 }
 
 Megrendeles * Futar::getMegrendeles()
@@ -165,7 +184,20 @@ double  Futar::getDistance(const Megrendeles & m) const
 
 double Futar::getDestDistance(const Megrendeles & m) const
 {
-	return sqrt((m.getDestX()-posX)*(m.getDestX() - posX)+ (m.getDestY() - posY)*(m.getDestY() - posY));
+	return sqrt((m.getDestX() - posX)*(m.getDestX() - posX) + (m.getDestY() - posY)*(m.getDestY() - posY));
+}
+
+bool Futar::available(const Megrendeles & m) const
+{
+	cout << "Rossz available hívódott meg!!";
+	return false;
+}
+
+int Futar::preference(const Megrendeles & m) const
+{
+	//Rossz konstruktor hívódott meg
+	throw 	string("You shouldnt use Futar's preference");
+	return -1;
 }
 
 //bool Bicikli::inRadius(const Megrendeles & m)
@@ -218,37 +250,57 @@ void Megrendeles::setPos()
 
 }
 
-Teherauto::Teherauto(int px ,int py, bool isEmptyy,int az):Futar(px,py,isEmptyy,az)
+Teherauto::Teherauto(int px, int py, bool isEmptyy, int az) :Futar(px, py, isEmptyy, az)
 {
 	//Futarhoz akkor viszont kell hibakezelés!
 }
 
-bool Teherauto::available(Megrendeles & m) const
+bool Teherauto::available(const Megrendeles & m) const
 {
 	return getIsEmpty();
 }
 
-char Teherauto::callType() const
+int Teherauto::preference(const Megrendeles & m) const
 {
-	return 't';
+	int pref=0;
+	if (this->getDistance(m)>15)
+	{
+		pref++;
+	}
+	if (this->getDestDistance(m)>60)
+	{
+		pref += 2;
+
+	}
+	return pref;
 }
 
-bool Szemelygepjarmu::available(Megrendeles & m) const
+
+
+bool Szemelygepjarmu::available(const Megrendeles & m) const
 {
-	return (m.getSize == 1 && getIsEmpty());
+	return (m.getSize() == 1 && getIsEmpty());
 }
 
-char Szemelygepjarmu::callType() const
+int Szemelygepjarmu::preference(const Megrendeles & m) const
 {
-	return 's';
+	int pref = 0;
+	if (this->getDistance(m) > 15)pref++;
+	if (this->getDestDistance(m) < 60)pref += 2;
+	return pref;
 }
 
-bool Bicikli::available(Megrendeles & m) const
+
+
+bool Bicikli::available(const Megrendeles & m) const
 {
-	return (m.getSize() == 1 && getDistance(m) <= 15 && getIsEmpty() == true && getDestDistance(m)<=15);	  
+	return (m.getSize() == 1 && getDistance(m) <= 15 && getIsEmpty() == true && getDestDistance(m) <= 15);
 }
 
-char Bicikli::callType() const
+int Bicikli::preference(const Megrendeles & m) const
 {
-	return 'b';
+	int pref = 1;
+	if (getDestDistance(m) < 30)pref += 3;
+	return pref;
 }
+
