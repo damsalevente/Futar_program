@@ -142,7 +142,7 @@ using namespace std;
 		void addOrder(const Megrendeles &m);
 		//felvesz egy új megrendelést
 		//a megadott megrendelésnek már LÉTEZNIE KELL 
-		Futar getFutar(int index);
+		Futar getFutar(int index) const;
 		//A megadott indexû Futár pointer értékét adja vissza
 		~Ceg();
 		//Destruktor, letöröljük a pointert
@@ -159,14 +159,11 @@ using namespace std;
 		void  giveOrder(Megrendeles *m);
 		//megkeresi a legjobb futárt a feladathoz
 		//használja a setpreference és a select függvényt-->nem constans
-
+		vector <Futar * > getFutarVector() const;
+		void step();
 	};
 	bool operator <(const Futar & first, const Futar & second);
-	//Ezzel fogom 
-	template <typename T>
-	void step(T& container)
-	{
-
-	}
+	//Ezzel fogom léptetni a cég futar vector futarjainak a helyet
+	
 
 #endif

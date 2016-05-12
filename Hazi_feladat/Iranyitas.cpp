@@ -37,7 +37,7 @@ void Ceg::addOrder(const Megrendeles & m)
 
 }
 
-Futar  Ceg::getFutar(int index) 
+Futar  Ceg::getFutar(int index) const
 {
 	if (index >= num) {
 		throw string("out of the bound,first futar is returned! ");
@@ -118,6 +118,21 @@ void Ceg::giveOrder(Megrendeles * m)
 	if (futar[index]->available(*m) == false) {}
 	else 
 		futar[index]->setMegrendeles(m);
+}
+
+vector<Futar*> Ceg::getFutarVector() const
+{
+	return futar;
+}
+
+void Ceg::step()
+{
+	for (int i = 0; i < num; i++)
+	{
+		futar[i]->setX(futar[i]->getMegrendeles()->getDestX());
+		futar[i]->setY(futar[i]->getMegrendeles()->getDestY());
+		futar[i]->getMegrendeles()->setPos();
+	}
 }
 
 

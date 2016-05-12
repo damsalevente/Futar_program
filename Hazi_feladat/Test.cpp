@@ -26,8 +26,8 @@ int main()
 
 	Bicikli bicikli(1, 1, true, 1);
 	Teherauto teherauto(1, 1, true, 2);
-	Megrendeles megrendeles(1, 1, 2, 2, 1);
-	Megrendeles rendeles(1, 3, 3, 3, 60);
+	Megrendeles megrendeles(1, 4, 4, 2, 1);
+	Megrendeles rendeles(1, 6, 3, 3, 60);
 	Ceg a;
 	a.hire(&bicikli);
 	a.hire(&teherauto);
@@ -39,8 +39,10 @@ int main()
 	a.printFutarList();
 	if (bicikli < teherauto)
 		cout<< string("biciklinek az azonositoja nagyobb")<<endl;
-
-	
+	a.step();
+	//ez af üggvény is mûködik már 
+	a.printFutarList();
+	cout <<string("megrendeles")<<rendeles.getPosY()<<endl;
 	//csillaggal lehet meghívni a printelést (ez sem valami univerzális ) 
 	
 
