@@ -1,7 +1,8 @@
 #include "Iranyitas.h"
 #include <iostream>
 #include <vector>
-#include <fstream>
+#include <fstream>	
+#include <string>
 using namespace std;
 
 
@@ -77,7 +78,16 @@ void Ceg::log() const
 
 void Ceg::select(Futar & a, Megrendeles * m)
 {
-	a.setMegrendeles(m);
+	try {
+		if (a.available(*m) != true)
+			throw string("It has an order, nothing is changed");
+		a.setMegrendeles(m);
+	}
+	catch (string s) {
+		cout << s << endl;
+
+	}
+	
 }
 
 int Ceg::track(Megrendeles & m) const
@@ -115,12 +125,33 @@ void Ceg::giveOrder(Megrendeles * m)
 
 Futar::Futar(int _posX, int _posY, bool _isEmpty, int _azonosito)
 {
+	try {
+		if (_posX < 0 )
+		{
+			throw string("X position is negative!");
+		}
+		if (_posY < 0)
+		{
+			throw("Y position is negative!");
+		}
+		if (_azonosito <= 0)
+		{
+			throw("Bad id set!");
+		}
+		posX = _posX;
+		posY = _posY;
+		isEmpty = _isEmpty;
+		azonosito = _azonosito;
+		megrendeles = NULL;
 
-	posX = _posX;
-	posY = _posY;
-	isEmpty = _isEmpty;
-	azonosito = _azonosito;
-	megrendeles = NULL;
+	}
+	catch (string a)
+	{
+		cout << a<< " Everything set to zero."<<endl;
+		posX = 0;
+		posY = posX;
+		azonosito = posY;
+	}
 }
 
 int Futar::getX() const
@@ -145,6 +176,13 @@ ostream & operator<<(ostream & o, const Futar &a)
 	o << "............................................." << endl;
 	return o;
 }
+
+bool operator<(const Futar & first, const Futar & second)
+{
+	return first.getAzonosito() < second.getAzonosito();
+}
+
+
 
 bool Futar::getIsEmpty() const
 {

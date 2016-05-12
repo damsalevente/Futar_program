@@ -1,7 +1,9 @@
 #include "Iranyitas.h"
-
+#include <iostream>
+#include <string>
 
 using namespace std;
+
 int main()
 {
 
@@ -35,6 +37,10 @@ int main()
 	a.giveOrder(&megrendeles);
 	a.giveOrder(&rendeles);
 	a.printFutarList();
+	if (bicikli < teherauto)
+		cout<< string("biciklinek az azonositoja nagyobb")<<endl;
+
+	
 	//csillaggal lehet meghívni a printelést (ez sem valami univerzális ) 
 	
 
@@ -52,7 +58,7 @@ int main()
 
 	  //--------------------------------------------------------------itt ér véget a cég tesztelése	   -----------------------------------------------------------------------------------
 	
-	Futar futi(1, 1, true, 666);//ördögtõl való 
+	Futar futi(-1, 1, true, 666);//ördögtõl való 
 	Szemelygepjarmu szemelygepjarmu(1, 1, true, 3);
 	Futar *b = &bicikli;
 	Futar *t = &teherauto;
