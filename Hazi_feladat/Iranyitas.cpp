@@ -16,8 +16,8 @@ Ceg::Ceg()
 
 void Ceg::hire(Futar *a)
 {
-	 
-	
+
+
 	futar.push_back(a);
 	num++;
 
@@ -68,7 +68,7 @@ void Ceg::printFutarList() const
 void Ceg::log() const
 {
 	ofstream logFile;
-	logFile.open("CegData.txt",ios::out);
+	logFile.open("CegData.txt", ios::out);
 	for (int i = 0; i < num; i++)
 	{
 		logFile << *futar[i];
@@ -87,7 +87,7 @@ void Ceg::select(Futar & a, Megrendeles * m)
 		cout << s << endl;
 
 	}
-	
+
 }
 
 int Ceg::track(Megrendeles & m) const
@@ -116,7 +116,7 @@ void Ceg::giveOrder(Megrendeles * m)
 		}
 	}
 	if (futar[index]->available(*m) == false) {}
-	else 
+	else
 		futar[index]->setMegrendeles(m);
 }
 
@@ -135,13 +135,18 @@ void Ceg::step()
 	}
 }
 
+Ceg::operator int()
+{
+	return num + mNum;
+}
+
 
 
 
 Futar::Futar(int _posX, int _posY, bool _isEmpty, int _azonosito)
 {
 	try {
-		if (_posX < 0 )
+		if (_posX < 0)
 		{
 			throw string("X position is negative!");
 		}
@@ -162,11 +167,19 @@ Futar::Futar(int _posX, int _posY, bool _isEmpty, int _azonosito)
 	}
 	catch (string a)
 	{
-		cout << a<< " Everything set to zero."<<endl;
+		cout << a << " Everything set to zero." << endl;
 		posX = 0;
 		posY = posX;
 		azonosito = posY;
 	}
+}
+
+Futar::Futar(const Futar & copy)
+{
+	this->azonosito = copy.azonosito;
+	this->posX = copy.posX;
+	this->posY = copy.posY;
+	this->isEmpty = copy.isEmpty;
 }
 
 int Futar::getX() const
@@ -331,12 +344,12 @@ bool Teherauto::available(const Megrendeles & m) const
 
 int Teherauto::preference(const Megrendeles & m) const
 {
-	int pref=0;
-	if (this->getDistance(m)>15)
+	int pref = 0;
+	if (this->getDistance(m) > Futar::AutoDist)
 	{
 		pref++;
 	}
-	if (this->getDestDistance(m)>60)
+	if (this->getDestDistance(m) > Futar::TeherDist)
 	{
 		pref += 2;
 
@@ -355,7 +368,7 @@ int Szemelygepjarmu::preference(const Megrendeles & m) const
 {
 	int pref = 0;
 	if (this->getDistance(m) > 15)pref++;
-	if (this->getDestDistance(m) < 60)pref += 2;
+	if (this->getDestDistance(m) < Futar::TeherDist)pref += 2;
 	return pref;
 }
 
@@ -369,7 +382,7 @@ bool Bicikli::available(const Megrendeles & m) const
 int Bicikli::preference(const Megrendeles & m) const
 {
 	int pref = 1;
-	if (getDestDistance(m) < 30)pref += 3;
+	if (getDestDistance(m) < Futar::AutoDist)pref += 3;
 	return pref;
 }
 

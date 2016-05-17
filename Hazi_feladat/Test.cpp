@@ -1,6 +1,7 @@
 #include "Iranyitas.h"
 #include <iostream>
 #include <string>
+#include <vld.h>
 
 using namespace std;
 
@@ -22,7 +23,7 @@ int main()
 	//a.select(t, m);
 	//a.track(m);	  //keresse meg, hogy melyik futárnál van, visszaadja az azonosítóját
 
-	//important!!!:Le kell tesztelni, hogy a numot nem rontottam-e el valahol  
+	//important!!!:Le kell tesztelni, hogy a numot nem rontottam-e el valahol  --check--
 
 	Bicikli bicikli(1, 1, true, 1);
 	Teherauto teherauto(1, 1, true, 2);
@@ -33,22 +34,24 @@ int main()
 	a.hire(&teherauto);
 	a.log();
 	a.printFutarList();
-	cout<<a.getFutar(0);
+	cout << a.getFutar(0);
 	a.giveOrder(&megrendeles);
 	a.giveOrder(&rendeles);
 	a.printFutarList();
+	a.addOrder(megrendeles);
+	a.addOrder(rendeles);
 	if (bicikli < teherauto)
-		cout<< string("biciklinek az azonositoja nagyobb")<<endl;
+		cout << string("biciklinek az azonositoja nagyobb") << endl;
 	a.step();
 	//ez af üggvény is mûködik már 
 	a.printFutarList();
-	cout <<string("megrendeles")<<rendeles.getPosY()<<endl;
+	cout << string("megrendeles") << rendeles.getPosY() << endl;
 	//csillaggal lehet meghívni a printelést (ez sem valami univerzális ) 
-	
+
 
 /*	----------------------------------------A cég tesztelése vector formájában	 -----------------------------------------------------------------------------------------------  */
-	
-	
+
+
 		 //itt a külsõ egy futar*ként átadott valami , ami az &b lenne 
 	//ceg.push_back(p);
 	//ceg.at(0)->available(megrendeles);
@@ -59,7 +62,7 @@ int main()
 	//ceg.clear();
 
 	  //--------------------------------------------------------------itt ér véget a cég tesztelése	   -----------------------------------------------------------------------------------
-	
+
 	Futar futi(-1, 1, true, 666);//ördögtõl való 
 	Szemelygepjarmu szemelygepjarmu(1, 1, true, 3);
 	Futar *b = &bicikli;
@@ -73,11 +76,15 @@ int main()
 	/*futi.available(megrendeles);*/
 	teherauto.available(megrendeles);	  //ezzel is jó függvénytörzsre ugrik
 
-	
-	
 
 
+	  //"Template osztály tesztelése
+	printer(szemelygepjarmu);
+	printer(futi);
 
+	//el tudjuk rontani a teherdistet mainben? 
+	//bicikli.AutoDist = 666;		//hibát dob rá, tehát nem lehet
+	//new csak a mainben fordulhat elõ, tehát itt is kell delete-zni õket
 
 
 	return 0;
